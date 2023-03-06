@@ -1,4 +1,4 @@
-from ai import easy
+from ai import easy, medium
 
 player1 = input("What is player one's name: ")
 player2 = input("What is player two's name: ")
@@ -23,6 +23,8 @@ while player1 == player2:
 
 if player2 == "easy":
     aiMode = "easy ai"
+elif player2 == "medium":
+    aiMode = "medium ai"
 
 
 def print_board():
@@ -92,14 +94,15 @@ def check_board():
                 exit()
     if row_1[2] != 0:
         if row_1[2] == row_2[1] and row_2[1] == row_3[0]:
-            if row_1[0] == 1:
+            if row_1[2] == 1:
                 print(player1 + " has won the game!")
                 exit()
-            if row_1[0] == 2:
+            if row_1[2] == 2:
                 print(player2 + " has won the game!")
                 exit()
     if moves > 9:
         print("It is a draw!")
+        exit()
 
 
 def put_piece(Input, symbol):
@@ -130,7 +133,15 @@ while True:
         # Play against AI
         if aiMode is not None:
             if aiMode == "easy ai":
-                print(easy.easy(rows, moves))
+                easy.easy(rows)
+                moves += 1
+                turn = not turn
+
+                print_board()
+            elif aiMode == "medium ai":
+                medium.medium(rows)
+                moves += 1
+                turn = not turn
                 print_board()
         else:
             # player two's turn
