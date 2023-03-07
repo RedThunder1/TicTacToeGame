@@ -48,13 +48,10 @@ def medium(rows):
     for x in range(2, -1, -1):
         if rows[rowNum][x] == 1:
             rowX += 1
-        print("X: " + str(x) + " rowX: " + str(rowX) + " row: " + str(rowNum))
         rowNum += 1
     rowNum = 0
     if rowX == 2:
-        print("detected 2")
         for x in range(2, -1, -1):
-            print ("finding open spot")
             if rows[rowNum][x] == 0:
                 rows[rowNum][x] = 2
                 print("AI placed at " + str(rowNum + 1) + "," + str(x + 1))
@@ -63,7 +60,6 @@ def medium(rows):
 
     # If it doesn't detect any potential wins it does a random move
     while True:
-        print("Random placement")
         move = [random.randrange(1, 4, 1), random.randrange(1, 4, 1)]
         if move[0] == 1 and row_1[move[1] - 1] == 0:
             row_1[move[1] - 1] = 2

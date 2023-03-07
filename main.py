@@ -1,4 +1,4 @@
-from ai import easy, medium
+from ai import easy, medium, hard
 
 player1 = input("What is player one's name: ")
 player2 = input("What is player two's name: ")
@@ -25,6 +25,8 @@ if player2 == "easy":
     aiMode = "easy ai"
 elif player2 == "medium":
     aiMode = "medium ai"
+elif player2 == "hard":
+    aiMode = "hard ai"
 
 
 def print_board():
@@ -140,6 +142,11 @@ while True:
                 print_board()
             elif aiMode == "medium ai":
                 medium.medium(rows)
+                moves += 1
+                turn = not turn
+                print_board()
+            elif aiMode == "hard ai":
+                hard.hard(rows)
                 moves += 1
                 turn = not turn
                 print_board()
