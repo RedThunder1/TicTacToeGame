@@ -1,10 +1,11 @@
 from ai import easy, medium, hard
 
-player1 = input("What is player one's name: ")
-player2 = input("What is player two's name: ")
+player1 = input("What is player one's name: ").strip().lower()
+player2 = input("What is player two's name: ").strip().lower()
 moves: int = 1
 gCoords = [0, 0]
-aiMode = None
+aiMode1 = None
+aiMode2 = None
 turn = False
 
 row_1 = [0, 0, 0]
@@ -13,20 +14,24 @@ row_3 = [0, 0, 0]
 rows = [row_1, row_2, row_3]
 
 while player1 == "":
-    player1 = input("Player1 can't be empty: ")
+    player1 = input("Player1 can't be empty: ").lower()
 
 while player2 == "":
-    player2 = input("Player2 can't be empty:  ")
+    player2 = input("Player2 can't be empty:  ").lower()
 
-while player1 == player2:
-    player2 = input("Player2 must change their name to a different one: ")
+if player1 == "easy":
+    aiMode1 = "easy ai"
+elif player1 == "medium":
+    aiMode1 = "medium ai"
+elif player1 == "hard":
+    aiMode1 = "hard ai"
 
 if player2 == "easy":
-    aiMode = "easy ai"
+    aiMode2 = "easy ai"
 elif player2 == "medium":
-    aiMode = "medium ai"
+    aiMode2 = "medium ai"
 elif player2 == "hard":
-    aiMode = "hard ai"
+    aiMode2 = "hard ai"
 
 
 def print_board():
@@ -64,6 +69,7 @@ def check_input(Input):
             else:
                 gCoords[1] = int(char)
     return True
+
 
 def check_board():
     # Checks horizontally
@@ -133,20 +139,21 @@ while True:
     # Check if a player has won,  Will only check after 3 moves because a player can't win until then
     if turn:
         # Play against AI
-        if aiMode is not None:
-            if aiMode == "easy ai":
-                easy.easy(rows)
+        if aiMode2 is not None:
+            print("AI 2's turn")
+            if aiMode2 == "easy ai":
+                easy.easy(rows, 2)
                 moves += 1
                 turn = not turn
 
                 print_board()
-            elif aiMode == "medium ai":
-                medium.medium(rows)
+            elif aiMode2 == "medium ai":
+                medium.medium(rows, 2)
                 moves += 1
                 turn = not turn
                 print_board()
-            elif aiMode == "hard ai":
-                hard.hard(rows)
+            elif aiMode2 == "hard ai":
+                hard.hard(rows, moves, 2)
                 moves += 1
                 turn = not turn
                 print_board()
@@ -155,7 +162,26 @@ while True:
             if check_input(input(player2 + ", please type your move: ")):
                 put_piece(gCoords, 2)
     else:
+        if aiMode1 is not None:
+            print("AI 1's turn")
+            if aiMode1 == "easy ai":
+                easy.easy(rows, 1)
+                moves += 1
+                turn = not turn
+
+                print_board()
+            elif aiMode1 == "medium ai":
+                medium.medium(rows, 1)
+                moves += 1
+                turn = not turn
+                print_board()
+            elif aiMode1 == "hard ai":
+                hard.hard(rows, moves, 1)
+                moves += 1
+                turn = not turn
+                print_board()
         # player one's turn
-        if check_input(input(player1 + ", please type your move: ")):
-            put_piece(gCoords, 1)
+        else:
+            if check_input(input(player1 + ", please type your move: ")):
+                put_piece(gCoords, 1)
     check_board()
